@@ -83,16 +83,6 @@ function notifyLivereload(event) {
         }
     });
 }
-/*
-gulp.task('default', function() {
-    config = extendConfig(config);
-    startExpress(config.paths);
-    startLivereload();
-    gulp.watch(getWatchPaths(), notifyLivereload);
-    console.log('Server started on port: ' + EXPRESS_PORT + ' with livereload on port: ' + 35729);
-});
-*/
-
 
 config = extendConfig(config);
 startExpress(config.paths);
