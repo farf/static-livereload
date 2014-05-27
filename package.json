@@ -1,0 +1,31 @@
+{
+  "name": "static-livereload",
+  "version": "0.1.0",
+  "description": "Refresh the browser as soon as you modify a file: you didn't know you could code as fast! ",
+  "main": "gulp",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/farf/static-livereload.git"
+  },
+  "author": "Farf",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/farf/static-livereload/issues"
+  },
+  "homepage": "https://github.com/farf/static-livereload/",
+  "dependencies": {
+    "connect-livereload": "^0.4.0",
+    "express": "^4.2.0",
+    "gulp": "^3.6.2",
+    "node.extend": "^1.0.10",
+    "optimist": "^0.6.1",
+    "tiny-lr": "0.0.7"
+  },
+  "preferGlobal": "true",
+  "bin": {
+    "static-livereload": "gulpfile.js"
+  }
+}
