@@ -2,28 +2,35 @@
 
 var config = require('./config');
 var gulp = require('gulp');
-var myArgs = require('minimist');
+var myArgs = require('minimist')(process.argv);
 var extend = require('node.extend');
+var portscanner = require('portscanner');
 
-var EXPRESS_PORT = 1111;
-var EXPRESS_ROOT = __dirname;
+var EXPRESS_PORT = 3000;
 var LIVERELOAD_PORT = 35729;
+var EXPRESS_ROOT = __dirname;
+
+
 
 // Get config file
-console.log(myArgs);
 if (typeof myArgs.config != 'undefined') {
-    console.log(myArgs.config);
     config = require(myArgs.config);
 }
 
 function extendConfig(config) {
     config = extend({
-        path: __dirname + '/public',
         paths: [],
-        extension: "js",
+        extension: "html",
         extensions: []
     }, config);
-    config.paths.push({'static': config.path});
+
+    if (typeof myArgs.path != 'undefined') {
+        if (myArgs.path.trim() == '.') {
+            myArgs.path = '';
+        }
+        config.paths.push({'static': process.cwd() + '/' + myArgs.path});
+    }
+
     config.extensions.push(config.extension);
 
     return config;
@@ -33,7 +40,6 @@ function extendConfig(config) {
 function getWatchPaths() {
 
     var watchurl = [];
-    console.log('Hello');
     for (var i = 0; i < config.extensions.length; i++) {
         for (var j = 0; j < config.paths.length; j++) {
             for (var path in config.paths[j]) {
@@ -60,7 +66,6 @@ function startExpress(paths) {
         }
     }
 
-
     app.listen(EXPRESS_PORT);
 }
 
@@ -84,8 +89,26 @@ function notifyLivereload(event) {
     });
 }
 
-config = extendConfig(config);
-startExpress(config.paths);
-startLivereload();
-gulp.watch(getWatchPaths(), notifyLivereload);
-console.log('Server started on port: ' + EXPRESS_PORT + ' with livereload on port: ' + 35729);
+portscanner.findAPortNotInUse(LIVERELOAD_PORT, LIVERELOAD_PORT + 50, '127.0.0.1', function(error, port) {
+    LIVERELOAD_PORT = port;
+
+    portscanner.findAPortNotInUse(EXPRESS_PORT, EXPRESS_PORT + 50, '127.0.0.1', function(error, port) {
+        EXPRESS_PORT = port;
+
+        config = extendConfig(config);
+        startExpress(config.paths);
+        startLivereload();
+        gulp.watch(getWatchPaths(), notifyLivereload);
+        console.log('Server started on port: ' + EXPRESS_PORT + ' with livereload on port: ' + LIVERELOAD_PORT);
+        console.log('Here are the directories you can explore and the directories linked');
+        for (var j = 0; j < config.paths.length; j++) {
+            for (var path in config.paths[j]) {
+                if (config.paths[j].hasOwnProperty(path)) {
+                    console.log('http://localhost:' + EXPRESS_PORT + '/' + path + ' -> ' + config.paths[j][path] );
+                }
+            }
+        }
+
+    });
+
+});

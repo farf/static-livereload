@@ -23,7 +23,8 @@
     "node.extend": "^1.0.10",
     "optimist": "^0.6.1",
     "tiny-lr": "0.0.7",
-    "minimist": "~0.1.0"
+    "minimist": "~0.1.0",
+    "portscanner": "~0.2.3"
   },
   "preferGlobal": "true",
   "bin": {
