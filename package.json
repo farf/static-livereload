@@ -1,6 +1,6 @@
 {
   "name": "static-livereload",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Refresh the browser as soon as you modify a file: you didn't know you could code as fast! ",
   "main": "gulp",
   "scripts": {
