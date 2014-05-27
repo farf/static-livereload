@@ -2,7 +2,7 @@
 
 var config = require('./config');
 var gulp = require('gulp');
-var myArgs = require('optimist').argv;
+var myArgs = require('minimist');
 var extend = require('node.extend');
 
 var EXPRESS_PORT = 1111;

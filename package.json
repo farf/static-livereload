@@ -22,7 +22,8 @@
     "gulp": "^3.6.2",
     "node.extend": "^1.0.10",
     "optimist": "^0.6.1",
-    "tiny-lr": "0.0.7"
+    "tiny-lr": "0.0.7",
+    "minimist": "~0.1.0"
   },
   "preferGlobal": "true",
   "bin": {
